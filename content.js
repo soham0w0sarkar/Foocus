@@ -647,6 +647,11 @@
 })(window, {});
 
 function render() {
+  if (document.querySelector(".myContainer")) {
+    document.querySelector(".myContainer").style.visibility = "visible";
+    return;
+  }
+
   const container = document.createElement("div");
   container.classList.add("myContainer");
   container.style.setProperty("background-color", "transparent", "important");
@@ -1574,6 +1579,6 @@ function triggerConfetti() {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "render") {
-    document.querySelector(".myContainer").style.visibility = "visible";
+    render();
   }
 });
