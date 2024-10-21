@@ -3,12 +3,21 @@
   "version": "1.0",
   "name": "Focus",
   "description": "Focus on the important things",
-  "permissions": ["storage"],
+  "permissions": ["storage", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "run_at": "document_end",
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assests/focus_16.png",
+      "124": "assests/focus_124.png"
+    }
+  }
 }

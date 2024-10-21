@@ -648,9 +648,8 @@
 
 function render() {
   const container = document.createElement("div");
-
+  container.classList.add("myContainer");
   container.style.setProperty("background-color", "transparent", "important");
-
   container.style.position = "fixed";
   container.style.margin = "0";
   container.style.padding = "0";
@@ -680,6 +679,7 @@ function render() {
         width: 100%;
         z-index: 999;
         padding: 2px 0;
+        position: relative;
       }
 
       .dark-mode.container {
@@ -697,9 +697,8 @@ function render() {
 
       .progress-bar {
         position: absolute;
-        width: calc(100% - 10px);
+        width: 100%;
         z-index: -2;
-        margin: 0 5px;
         height: 20px;
         background-color: inherit;
         overflow: hidden;
@@ -709,6 +708,7 @@ function render() {
         height: 100%;
         width: 0;
         background-color: #4caf50;
+        transition: width 2s ease-out;
       }
 
       .dark-mode .progress {
@@ -716,7 +716,10 @@ function render() {
       }
 
       .progress-text {
-        margin-left: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         color: #1c1c1c;
         font-size: 14px;
         display: flex;
@@ -750,17 +753,26 @@ function render() {
 
       .timer > input {
         font-size: 16px;
+        font-weight: lighter;
         width: 20px;
       }
 
       .play-btn,
       .reset-btn {
-        margin: 0 3px;
+        margin: 0;
         background: none;
         border: none;
         color: inherit;
         font-size: 16px;
         cursor: pointer;
+      }
+
+      .play-btn {
+        margin: 0 10px ;
+      }
+
+      .reset-btn {
+        margin: 0;
       }
 
       .collapsed {
@@ -769,17 +781,17 @@ function render() {
         transition: all 1ms ease;
       }
 
-      .collapsed.progress-bar {
+      .collapsed .progress-bar {
         height: 4px;
       }
 
-      .collapsed.progress {
+      .collapsed .progress {
         height: 100%;
       }
 
-      .collapsed.progress-text,
-      .collapsed.timer,
-      .collapsed.options-btn
+      .collapsed .progress-text,
+      .collapsed .timer,
+      .collapsed .options-btn
       {
         display: none;
       }
@@ -791,6 +803,14 @@ function render() {
         border-right: 10px solid transparent;
         border-top: 8px solid white;
         cursor: pointer;
+        position: relative;
+      }
+
+      .notch > svg {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translatex(-50%);
       }
 
       .dark-mode.notch {
@@ -808,7 +828,7 @@ function render() {
         font-weight: bolder;
         font-size: 18px;
         cursor: pointer;
-        margin-right: 5px;
+        margin-right: 10px;
       }
 
       .dark-mode .options-btn {
@@ -822,9 +842,9 @@ function render() {
         background-color: white;
         border: 1px solid #ccc;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 200px;
+        width: 220px;
         z-index: 1000;
-        padding: 10px;
+        padding: 15px;
         border-radius: 5px;
       }
 
@@ -840,8 +860,9 @@ function render() {
 
       #animation-toggle-label,
       #darkmode-toggle-label {
-        width: 30px;
-        height: 15px;
+        margin-top: 3px;
+        width: 40px;
+        height: 20px;
         position: relative;
         display: block;
         background: #ebebeb;
@@ -855,8 +876,8 @@ function render() {
       #animation-toggle-label:after,
       #darkmode-toggle-label:after {
         content: "";
-        width: 13px;
-        height: 13px;
+        width: 18px;
+        height: 18px;
         position: absolute;
         top: 1px;
         left: 1px;
@@ -882,7 +903,7 @@ function render() {
 
       #animation-toggle:checked + #animation-toggle-label:after,
       #darkmode-toggle:checked + #darkmode-toggle-label:after {
-        left: 29px;
+        left: 39px;
         transform: translateX(-100%);
         background: linear-gradient(180deg, #777, #3a3a3a);
       }
@@ -947,15 +968,18 @@ function render() {
       }
 
       .btn {
+        padding: 5px 0 15px 0;
+        display: flex;
+        align-items: center;
         justify-content: center;
-        margin-top: 20px;
+        border-bottom: 1px solid #ccc;
       }
 
       #snooze-btn {
         background-color: #ffffff;
         border: 1px solid gray;
         border-radius: 20px;
-        padding: 6px;
+        padding: 10px;
         font-weight: bold;
         color: black;
         cursor: pointer;
@@ -963,7 +987,7 @@ function render() {
       }
 
       .heading {
-        margin: 30px 0 30px 0;
+        margin: 5px 0 15px 0;
         justify-content: center;
         gap: 5px;
       }
@@ -1004,7 +1028,16 @@ function render() {
       }
 
       .dark-mode svg {
-        fill: white;
+        stroke: white !important;
+        fill: white !important;
+      }
+
+      .dark-mode svg g g g {
+        fill: white !important;
+      }
+
+      .dark-mode svg g path, .dark-mode svg g rect {
+        fill: white !important;
       }
     </style>
 
@@ -1017,7 +1050,7 @@ function render() {
         <input
           type="text"
           id="focus-input"
-          placeholder="What are you working on?"
+          placeholder="What's the one thing you want to focus on right now?"
         />
       </div>
 
@@ -1026,43 +1059,15 @@ function render() {
         :
         <input type="text" id="timer-sec" value="00" />
         <button class="play-btn">
-          <svg width="14" height="14" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.11200000000000002"></g>
-            <g id="SVGRepo_iconCarrier"> <title>play [#1003]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#1003]"> </path> </g> </g> </g> </g></svg>
-        </button>
+           <svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+         </button>
         <button class="reset-btn">
-         <svg width="14" height="14" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="2.016"> <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 1 0 2.5 2.5)"> <path d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"></path> <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)"></path> </g> </g><g id="SVGRepo_iconCarrier"> <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 1 0 2.5 2.5)"> <path d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"></path> <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)"></path> </g> </g></svg>
+         <svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="14" height="14" fill="#000000"></rect> </g></svg>
         </button>
       </div>
       <button class="options-btn">⋮</button>
 
       <div class="dropdown-menu hidden">
-        <div class="dropdown-item row">
-          <span>Light Mode</span>
-          <input type="checkbox" id="darkmode-toggle" />
-          <label for="darkmode-toggle" id="darkmode-toggle-label"></label>
-        </div>
-        <div class="dropdown-item row">
-          <span>Progress Animation</span>
-          <input type="checkbox" id="animation-toggle" />
-          <label for="animation-toggle" id="animation-toggle-label"></label>
-        </div>
-        <div class="dropdown-item">
-          <span>Progress Bar Color</span>
-          <div class="color-options">
-            <span class="color-option" style="background-color: #f44336"></span>
-            <span class="color-option" style="background-color: #e91e63"></span>
-            <span class="color-option" style="background-color: #9c27b0"></span>
-            <span class="color-option" style="background-color: #673ab7"></span>
-            <span class="color-option" style="background-color: #3f51b5"></span>
-          </div>
-        </div>
-        <div class="dropdown-item row btn">
-          <button id="snooze-btn">
-            Snooze for 1hr
-          </button>
-        </div>
         <div class="dropdown-item row heading">
           <h4>ULTRA FOCUS</h4>
           <a href="https://example.com/" target="_blank">
@@ -1075,6 +1080,31 @@ function render() {
             </svg>
           </a>
         </div>
+        <div class="dropdown-item row">
+          <span>Light Mode</span>
+          <input type="checkbox" id="darkmode-toggle" />
+          <label for="darkmode-toggle" id="darkmode-toggle-label"></label>
+        </div>
+        <div class="dropdown-item row">
+          <span>Progress Animation</span>
+          <input type="checkbox" id="animation-toggle" />
+          <label for="animation-toggle" id="animation-toggle-label"></label>
+        </div>
+        <div class="dropdown-item">
+          <span>Progress Bar Color</span>
+            <div class="color-options">
+              <span class="color-option" style="background-color: #4caf50"></span>
+              <span class="color-option" style="background-color: #2196f3"></span>
+              <span class="color-option" style="background-color: #ff9800"></span>
+              <span class="color-option" style="background-color: #e91e63"></span>
+              <span class="color-option" style="background-color: #9e9e9e"></span>
+            </div>
+        </div>
+        <div class="dropdown-item row btn">
+          <button id="snooze-btn">
+            Snooze for 1 hour
+          </button>
+        </div>
         <div class="dropdown-item row links">
           <a href="https://example.com/" target="_blank">About</a>
           <a href="https://example.com/" target="_blank">Guide</a>
@@ -1082,12 +1112,15 @@ function render() {
         </div>
       </div>
     </div>
-    <span class="notch"></span>
+    <span class="notch">
+   <svg fill="#000000" height="7px" width="7px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.74 511.74" xml:space="preserve" stroke="#000000" stroke-width="38.89186"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M508.788,371.087L263.455,125.753c-4.16-4.16-10.88-4.16-15.04,0L2.975,371.087c-4.053,4.267-3.947,10.987,0.213,15.04 c4.16,3.947,10.667,3.947,14.827,0l237.867-237.76l237.76,237.76c4.267,4.053,10.987,3.947,15.04-0.213 C512.734,381.753,512.734,375.247,508.788,371.087z"></path> </g> </g> </g></svg>
+    </span>
   `;
 
   document.body.appendChild(container);
 
   let countdownInterval = null;
+  let snoozeTimeout = null;
   let isRunning = false;
   let totalInitialTime = 0;
   let remainingTime = 0;
@@ -1129,30 +1162,33 @@ function render() {
     const minutes = parseInt(minInput.value) || 0;
     const seconds = parseInt(secInput.value) || 0;
 
-    totalInitialTime = minutes * 60 + seconds;
-    remainingTime = totalInitialTime;
+    totalInitialTime = totalInitialTime
+      ? totalInitialTime
+      : minutes * 60 + seconds;
+    remainingTime = remainingTime ? remainingTime : totalInitialTime;
 
     if (remainingTime <= 0) return;
 
     isRunning = true;
     playBtn.innerHTML = `
-      <svg width="13" height="13" viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pause [#1006]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-227.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M172,3605 C171.448,3605 171,3605.448 171,3606 L171,3612 C171,3612.552 171.448,3613 172,3613 C172.552,3613 173,3612.552 173,3612 L173,3606 C173,3605.448 172.552,3605 172,3605 M177,3606 L177,3612 C177,3612.552 176.552,3613 176,3613 C175.448,3613 175,3612.552 175,3612 L175,3606 C175,3605.448 175.448,3605 176,3605 C176.552,3605 177,3605.448 177,3606" id="pause-[#1006]"> </path> </g> </g> </g> </g></svg>
-`;
+      <svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 1H2V15H7V1Z" fill="#000000"></path> <path d="M14 1H9V15H14V1Z" fill="#000000"></path> </g></svg>
+      `;
 
     countdownInterval = setInterval(() => {
       if (remainingTime <= 0) {
         updateProgress(0);
-        triggerConfetti();
         clearInterval(countdownInterval);
         isRunning = false;
-
-        playBtn.innerHTML = `<svg width="14" height="14" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.11200000000000002"></g><g id="SVGRepo_iconCarrier"> <title>play [#1003]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#1003]"> </path> </g> </g> </g> </g></svg>
-    `;
+        totalInitialTime = 0;
+        playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+        `;
         saveState();
         return;
       }
 
       remainingTime--;
+
+      console.log(remainingTime, totalInitialTime);
 
       const currentMinutes = Math.floor(remainingTime / 60);
       const currentSeconds = remainingTime % 60;
@@ -1162,6 +1198,7 @@ function render() {
 
       const progressPercentage =
         ((totalInitialTime - remainingTime) / totalInitialTime) * 100;
+
       updateProgress(progressPercentage);
       saveState();
     }, 1000);
@@ -1183,15 +1220,18 @@ function render() {
   const resetTimer = () => {
     stopTimer();
     resetInputs();
+    totalInitialTime = 0;
+    remainingTime = 0;
     const playBtn = shadowRoot.querySelector(".play-btn");
-    playBtn.innerHTML = `<svg width="13" height="13" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.11200000000000002"></g><g id="SVGRepo_iconCarrier"> <title>play [#1003]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#1003]"> </path> </g> </g> </g> </g></svg>
-`;
+    playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+    `;
     saveState();
   };
 
   const resetInputs = () => {
     shadowRoot.getElementById("timer-min").value = "00";
     shadowRoot.getElementById("timer-sec").value = "00";
+    shadowRoot.getElementById("focus-input").value = "";
     updateProgress(0);
   };
 
@@ -1202,7 +1242,8 @@ function render() {
       startTimer();
     } else {
       stopTimer();
-      playBtn.innerHTML = `<svg width="13" height="13" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.11200000000000002"></g><g id="SVGRepo_iconCarrier"> <title>play [#1003]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#1003]"> </path> </g> </g> </g> </g></svg>`;
+      playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+      `;
     }
     saveState();
   };
@@ -1220,19 +1261,30 @@ function render() {
   const notch = shadowRoot.querySelector(".notch");
 
   notch.addEventListener("click", () => {
-    container.classList.toggle("collapsed");
-    shadowRoot.querySelectorAll("*").forEach((el) => {
-      el.classList.toggle("collapsed");
-    });
+    const container = shadowRoot.querySelector(".container");
+    const svg = notch.querySelector("svg");
+
+    if (container.classList.contains("collapsed")) {
+      container.classList.remove("collapsed");
+      svg.style.transform = "";
+    } else {
+      container.classList.add("collapsed");
+      svg.style.transform = `rotate(180deg) translateX(50%)`;
+    }
 
     saveState();
   });
 
+  const snoozeBtn = shadowRoot.querySelector("#snooze-btn");
   const optionsBtn = shadowRoot.querySelector(".options-btn");
   const dropdownMenu = shadowRoot.querySelector(".dropdown-menu");
   const animationToggle = shadowRoot.getElementById("animation-toggle");
   const themeToggleBtn = shadowRoot.getElementById("darkmode-toggle");
   const colorOptions = shadowRoot.querySelectorAll(".color-option");
+
+  snoozeBtn.addEventListener("click", () => {
+    snooze();
+  });
 
   optionsBtn.addEventListener("click", () => {
     dropdownMenu.classList.toggle("hidden");
@@ -1273,7 +1325,9 @@ function render() {
     const progressText = shadowRoot.getElementById("focus-input").value;
     const timerMin = shadowRoot.getElementById("timer-min").value;
     const timerSec = shadowRoot.getElementById("timer-sec").value;
-    const isCollapsed = container.classList.contains("collapsed");
+    const isCollapsed = shadowRoot
+      .querySelector(".container")
+      .classList.contains("collapsed");
     const isDarkMode = shadowRoot
       .querySelector(".container")
       .classList.contains("dark-mode");
@@ -1284,6 +1338,7 @@ function render() {
     const progressAnimation = shadowRoot
       .querySelector(".progress")
       .classList.contains("shim");
+    const snoozed = container.style.visibility === "hidden";
 
     const state = {
       progressColor,
@@ -1298,11 +1353,10 @@ function render() {
       isCollapsed,
       progressWidth,
       resetBtn,
+      snoozed,
     };
 
-    chrome.storage.sync.set({ state }, () => {
-      console.log("State is saved:", state);
-    });
+    chrome.storage.sync.set({ state });
   };
 
   const loadState = () => {
@@ -1321,7 +1375,12 @@ function render() {
           isCollapsed,
           progressWidth,
           resetBtn,
+          snoozed,
         } = state;
+
+        if (snoozed) {
+          container.style.visibility = "hidden";
+        }
 
         shadowRoot.getElementById("focus-input").value = progressText;
         shadowRoot.getElementById("timer-min").value = timerMin;
@@ -1329,7 +1388,6 @@ function render() {
 
         if (progressAnimation) {
           const animationToggle = shadowRoot.querySelector("#animation-toggle");
-          console.log(animationToggle);
           if (animationToggle) animationToggle.checked = true;
           shadowRoot.querySelector(".progress").classList.add("shim");
         }
@@ -1340,11 +1398,9 @@ function render() {
         }
 
         if (isCollapsed) {
-          container.classList.add("collapsed");
-          shadowRoot.querySelectorAll("*").forEach((el) => {
-            el.classList.add("collapsed");
-          });
-          container.style.padding = "0";
+          shadowRoot.querySelector(".container").classList.add("collapsed");
+          const svg = shadowRoot.querySelector(".notch svg");
+          svg.style.transform = `rotate(180deg) translateX(50%)`;
         }
 
         if (isDarkMode) {
@@ -1362,26 +1418,138 @@ function render() {
         isRunning = running;
         totalInitialTime = initialTime;
         remainingTime = remaining;
-
-        const playBtn = shadowRoot.querySelector(".play-btn");
-        if (isRunning) {
-          startTimer();
-          playBtn.innerHTML = `<svg width="13" height="13" viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pause [#1006]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-227.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M172,3605 C171.448,3605 171,3605.448 171,3606 L171,3612 C171,3612.552 171.448,3613 172,3613 C172.552,3613 173,3612.552 173,3612 L173,3606 C173,3605.448 172.552,3605 172,3605 M177,3606 L177,3612 C177,3612.552 176.552,3613 176,3613 C175.448,3613 175,3612.552 175,3612 L175,3606 C175,3605.448 175.448,3605 176,3605 C176.552,3605 177,3605.448 177,3606" id="pause-[#1006]"> </path> </g> </g> </g> </g></svg>
-`;
-        } else {
-          playBtn.innerHTML = `<svg width="13" height="13" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.11200000000000002"></g><g id="SVGRepo_iconCarrier"> <title>play [#1003]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#1003]"> </path> </g> </g> </g> </g></svg>`;
-        }
       }
     });
   };
 
+  chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (namespace === "sync") {
+      const {
+        isDarkMode,
+        progressText,
+        progressColor,
+        progressAnimation,
+        timerMin,
+        timerSec,
+        isRunning: running,
+        totalInitialTime: initialTime,
+        remainingTime: remaining,
+        isCollapsed,
+        progressWidth,
+        resetBtn,
+        snoozed,
+      } = changes.state.newValue;
+
+      if (snoozed) {
+        container.style.visibility = "hidden";
+      } else {
+        container.style.visibility = "visible";
+      }
+
+      shadowRoot.getElementById("focus-input").value = progressText;
+      shadowRoot.getElementById("timer-min").value = timerMin;
+      shadowRoot.getElementById("timer-sec").value = timerSec;
+
+      if (progressAnimation) {
+        const animationToggle = shadowRoot.querySelector("#animation-toggle");
+        if (animationToggle) animationToggle.checked = true;
+        shadowRoot.querySelector(".progress").classList.add("shim");
+      } else {
+        const animationToggle = shadowRoot.querySelector("#animation-toggle");
+        if (animationToggle) animationToggle.checked = false;
+        shadowRoot.querySelector(".progress").classList.remove("shim");
+      }
+
+      if (progressColor) {
+        shadowRoot.querySelector(".progress").style.backgroundColor =
+          progressColor;
+      }
+
+      if (isCollapsed) {
+        shadowRoot.querySelector(".container").classList.add("collapsed");
+        const svg = shadowRoot.querySelector(".notch svg");
+        svg.style.transform = `rotate(180deg) translateX(50%)`;
+      } else {
+        shadowRoot.querySelector(".container").classList.remove("collapsed");
+        const svg = shadowRoot.querySelector(".notch svg");
+        svg.style.transform = "";
+      }
+
+      if (isDarkMode) {
+        const darkModeToggle = shadowRoot.querySelector("#darkmode-toggle");
+        if (darkModeToggle) {
+          darkModeToggle.checked = true;
+          shadowRoot.querySelector(".container").classList.add("dark-mode");
+          shadowRoot.querySelector(".notch").classList.add("dark-mode");
+        }
+      } else {
+        const darkModeToggle = shadowRoot.querySelector("#darkmode-toggle");
+        if (darkModeToggle) {
+          darkModeToggle.checked = false;
+          shadowRoot.querySelector(".container").classList.remove("dark-mode");
+          shadowRoot.querySelector(".notch").classList.remove("dark-mode");
+        }
+      }
+      shadowRoot.querySelector(".progress").style.width = progressWidth;
+      shadowRoot.querySelector(".reset-btn").style.display = resetBtn;
+
+      isRunning = running;
+      totalInitialTime = initialTime;
+      remainingTime = remaining;
+
+      const playBtn = shadowRoot.querySelector(".play-btn");
+      if (isRunning) {
+        playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 1H2V15H7V1Z" fill="#000000"></path> <path d="M14 1H9V15H14V1Z" fill="#000000"></path> </g></svg>
+        `;
+      } else {
+        clearInterval(countdownInterval);
+        playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+          <g id="SVGRepo_iconCarrier">
+            <title>play [#1001]</title>
+            <desc>
+              Created with Sketch.
+            </desc>
+            <defs/>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000">
+                <g id="icons" transform="translate(56.000000, 160.000000)">
+                  <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+        `;
+      }
+
+      if (remaining === 0 && changes.state.oldValue.remainingTime === 0) {
+        if (!running && changes.state.oldValue.isRunning) {
+          triggerConfetti();
+        }
+      }
+    }
+  });
+
   loadState();
+
+  function snooze() {
+    const snoozeTime = 60 * 60 * 1000;
+
+    container.style.visibility = "hidden";
+
+    snoozeTimeout = setTimeout(() => {
+      container.style.visibility = "visible";
+      saveState();
+    }, snoozeTime);
+    saveState();
+  }
 }
 
 render();
 
 function triggerConfetti() {
-  //top right
   confetti({
     angle: 200,
     spread: 220,
@@ -1389,7 +1557,6 @@ function triggerConfetti() {
     origin: { x: 1, y: 0 },
   });
 
-  //top left
   confetti({
     angle: -20,
     spread: 220,
@@ -1397,7 +1564,6 @@ function triggerConfetti() {
     origin: { x: 0, y: 0 },
   });
 
-  //top center
   confetti({
     angle: -90,
     spread: 220,
@@ -1405,3 +1571,9 @@ function triggerConfetti() {
     origin: { x: 0.5, y: 0 },
   });
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "render") {
+    document.querySelector(".myContainer").style.visibility = "visible";
+  }
+});
