@@ -912,6 +912,10 @@ function render() {
         width: 20px;
       }
 
+      #timer-min {
+        width: 30px;
+      }
+
       .play-btn,
       .reset-btn {
         margin: 0;
@@ -1076,7 +1080,7 @@ function render() {
 
       #animation-toggle-label:active:after,
       #darkmode-toggle-label:active:after {
-        width: 260px;
+        transform: scaleX(1.2);
       }
 
       .shim {
@@ -1236,9 +1240,10 @@ function render() {
       </div>
 
       <div class="timer">
-        <input type="text" id="timer-min" value="00" />
+        <input id="timer-min" inputmode="numeric" maxlength="3" value="000" />
         :
-        <input type="text" id="timer-sec" value="00" />
+        <input id="timer-sec" inputmode="numeric" maxlength="2" value="00" />
+
         <button class="play-btn">
            <svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
          </button>
@@ -1259,15 +1264,6 @@ function render() {
         </div>
         <div class="dropdown-item row heading">
           <img src="chrome-extension://${chrome.runtime.id}/assests/menu_logo.svg" alt="Logo" height="20"/>
-          <a href="https://example.com/" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-              <g id="SVGRepo_iconCarrier">
-                <path d="M5 12V6C5 5.44772 5.44772 5 6 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H12M8.11111 12H12M12 12V15.8889M12 12L5 19" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"></path>
-              </g>
-            </svg>
-          </a>
         </div>
         <div class="dropdown-item row">
           <span>Light Mode</span>
@@ -1295,8 +1291,7 @@ function render() {
           </button>
         </div>
         <div class="dropdown-item row links">
-          <a href="https://example.com/" target="_blank">About</a>
-          <a href="https://example.com/" target="_blank">Guide</a>
+          <a href="https://links.cebe.fyi/ultra-focus" target="_blank">About</a>
           <a href="https://tally.so/r/n0REgA" target="_blank">Feedback</a>
         </div>
         <div class="dropdown-item row links">
@@ -1317,32 +1312,37 @@ function render() {
   let totalInitialTime = 0;
   let remainingTime = 0;
 
-  const validateTimerInput = () => {
-    const minInput = shadowRoot.getElementById("timer-min");
-    const secInput = shadowRoot.getElementById("timer-sec");
+  const validateTimerInput = (e) => {
+    const input = e.target;
+    const isMin = input.id === "timer-min";
+    const isSec = input.id === "timer-sec";
+
+    input.value = input.value.replace(/\D/g, "");
+
+    if (isMin) {
+      input.value = input.value.slice(0, 3);
+
+      if (input.value && parseInt(input.value, 10) > 999) {
+        input.value = "999";
+      }
+    }
+
+    if (isSec) {
+      input.value = input.value.slice(0, 2);
+
+      if (input.value && parseInt(input.value, 10) > 59) {
+        input.value = "59";
+      }
+    }
 
     const isNumber = /^\d+$/;
 
-    if (
-      !isNumber.test(minInput.value.trim()) ||
-      parseInt(minInput.value) > 59
-    ) {
-      minInput.classList.add("input-error");
-      minInput.setAttribute("aria-invalid", "true");
+    if (!isNumber.test(input.value.trim()) && input.value.trim() !== "") {
+      input.classList.add("input-error");
+      input.setAttribute("aria-invalid", "true");
     } else {
-      minInput.classList.remove("input-error");
-      minInput.removeAttribute("aria-invalid");
-    }
-
-    if (
-      !isNumber.test(secInput.value.trim()) ||
-      parseInt(secInput.value) > 59
-    ) {
-      secInput.classList.add("input-error");
-      secInput.setAttribute("aria-invalid", "true");
-    } else {
-      secInput.classList.remove("input-error");
-      secInput.removeAttribute("aria-invalid");
+      input.classList.remove("input-error");
+      input.removeAttribute("aria-invalid");
     }
   };
 
@@ -1385,7 +1385,7 @@ function render() {
       const currentMinutes = Math.floor(remainingTime / 60);
       const currentSeconds = remainingTime % 60;
 
-      minInput.value = String(currentMinutes).padStart(2, "0");
+      minInput.value = String(currentMinutes).padStart(3, "0");
       secInput.value = String(currentSeconds).padStart(2, "0");
 
       const progressPercentage =
@@ -1421,7 +1421,7 @@ function render() {
   };
 
   const resetInputs = () => {
-    shadowRoot.getElementById("timer-min").value = "00";
+    shadowRoot.getElementById("timer-min").value = "000";
     shadowRoot.getElementById("timer-sec").value = "00";
     shadowRoot.getElementById("focus-input").value = "";
     updateProgress(0);
@@ -1665,7 +1665,9 @@ function render() {
       if (isCollapsed) {
         shadowRoot.querySelector(".container").classList.add("collapsed");
         const svg = shadowRoot.querySelector(".notch svg");
+        const menu = shadowRoot.querySelector(".dropdown-menu");
         svg.style.transform = `rotate(180deg) translateX(50%)`;
+        menu.classList.add("hidden");
       } else {
         shadowRoot.querySelector(".container").classList.remove("collapsed");
         const svg = shadowRoot.querySelector(".notch svg");
