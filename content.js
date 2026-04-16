@@ -1,5 +1,5 @@
 !(function (t, e) {
-  !(function t(e, a, n, r) {
+  (!(function t(e, a, n, r) {
     var o = !!(
         e.Worker &&
         e.Blob &&
@@ -50,7 +50,7 @@
             if (h) return t;
             if (f.has(t)) return f.get(t);
             var e = new OffscreenCanvas(t.width, t.height);
-            return e.getContext("2d").drawImage(t, 0, 0), f.set(t, e), e;
+            return (e.getContext("2d").drawImage(t, 0, 0), f.set(t, e), e);
           },
           clear: function () {
             f.clear();
@@ -124,12 +124,12 @@
               function e(e, a) {
                 t.postMessage({ options: e || {}, callback: a });
               }
-              (t.init = function (e) {
+              ((t.init = function (e) {
                 var a = e.transferControlToOffscreen();
                 t.postMessage({ canvas: a }, [a]);
               }),
                 (t.fire = function (a, n, r) {
-                  if (M) return e(a, null), M;
+                  if (M) return (e(a, null), M);
                   var o = Math.random().toString(36).slice(2);
                   return (M = c(function (n) {
                     function i(e) {
@@ -141,15 +141,15 @@
                         r(),
                         n());
                     }
-                    t.addEventListener("message", i),
+                    (t.addEventListener("message", i),
                       e(a, o),
-                      (v[o] = i.bind(null, { data: { callback: o } }));
+                      (v[o] = i.bind(null, { data: { callback: o } })));
                   }));
                 }),
                 (t.reset = function () {
                   for (var e in (t.postMessage({ reset: !0 }), v))
-                    v[e](), delete v[e];
-                });
+                    (v[e](), delete v[e]);
+                }));
             })(b);
           }
           return b;
@@ -205,15 +205,15 @@
       );
     }
     function k(t) {
-      (t.width = document.documentElement.clientWidth),
-        (t.height = document.documentElement.clientHeight);
+      ((t.width = document.documentElement.clientWidth),
+        (t.height = document.documentElement.clientHeight));
     }
     function B(t) {
       var e = t.getBoundingClientRect();
-      (t.width = e.width), (t.height = e.height);
+      ((t.width = e.width), (t.height = e.height));
     }
     function F(t, e) {
-      (e.x += Math.cos(e.angle2D) * e.velocity + e.drift),
+      ((e.x += Math.cos(e.angle2D) * e.velocity + e.drift),
         (e.y += Math.sin(e.angle2D) * e.velocity + e.gravity),
         (e.velocity *= e.decay),
         e.flat
@@ -229,7 +229,7 @@
             (e.tiltAngle += 0.1),
             (e.tiltSin = Math.sin(e.tiltAngle)),
             (e.tiltCos = Math.cos(e.tiltAngle)),
-            (e.random = Math.random() + 2));
+            (e.random = Math.random() + 2)));
       var a = e.tick++ / e.totalTicks,
         n = e.x + e.random * e.tiltCos,
         r = e.y + e.random * e.tiltSin,
@@ -268,7 +268,7 @@
                   Math.cos(i) * o,
                   a,
                   n,
-                ])
+                ]),
               ),
               c
             );
@@ -279,8 +279,8 @@
             e.y,
             0.1 * Math.abs(o - n),
             0.1 * Math.abs(l - r),
-            (Math.PI / 10) * e.wobble
-          )
+            (Math.PI / 10) * e.wobble,
+          ),
         );
       else if ("bitmap" === e.shape.type) {
         var s = (Math.PI / 10) * e.wobble,
@@ -298,11 +298,11 @@
           ]);
         d.multiplySelf(new DOMMatrix(e.shape.matrix));
         var m = t.createPattern(w.transform(e.shape.bitmap), "no-repeat");
-        m.setTransform(d),
+        (m.setTransform(d),
           (t.globalAlpha = 1 - a),
           (t.fillStyle = m),
           t.fillRect(e.x - f / 2, e.y - u / 2, f, u),
-          (t.globalAlpha = 1);
+          (t.globalAlpha = 1));
       } else if ("circle" === e.shape)
         t.ellipse
           ? t.ellipse(
@@ -312,15 +312,15 @@
               Math.abs(l - r) * e.ovalScalar,
               (Math.PI / 10) * e.wobble,
               0,
-              2 * Math.PI
+              2 * Math.PI,
             )
           : (function (t, e, a, n, r, o, i, l, s) {
-              t.save(),
+              (t.save(),
                 t.translate(e, a),
                 t.rotate(o),
                 t.scale(n, r),
                 t.arc(0, 0, 1, i, l, s),
-                t.restore();
+                t.restore());
             })(
               t,
               e.x,
@@ -329,7 +329,7 @@
               Math.abs(l - r) * e.ovalScalar,
               (Math.PI / 10) * e.wobble,
               0,
-              2 * Math.PI
+              2 * Math.PI,
             );
       else if ("star" === e.shape)
         for (
@@ -341,22 +341,21 @@
             y = 5,
             x = Math.PI / y;
           y--;
-
         )
-          (M = e.x + Math.cos(g) * b),
+          ((M = e.x + Math.cos(g) * b),
             (v = e.y + Math.sin(g) * b),
             t.lineTo(M, v),
             (g += x),
             (M = e.x + Math.cos(g) * p),
             (v = e.y + Math.sin(g) * p),
             t.lineTo(M, v),
-            (g += x);
+            (g += x));
       else
-        t.moveTo(Math.floor(e.x), Math.floor(e.y)),
+        (t.moveTo(Math.floor(e.x), Math.floor(e.y)),
           t.lineTo(Math.floor(e.wobbleX), Math.floor(r)),
           t.lineTo(Math.floor(o), Math.floor(l)),
-          t.lineTo(Math.floor(n), Math.floor(e.wobbleY));
-      return t.closePath(), t.fill(), e.tick < e.totalTicks;
+          t.lineTo(Math.floor(n), Math.floor(e.wobbleY)));
+      return (t.closePath(), t.fill(), e.tick < e.totalTicks);
     }
     function A(t, a) {
       var i,
@@ -391,14 +390,13 @@
             k = !!T(e, "flat"),
             B = (function (t) {
               var e = T(t, "origin", Object);
-              return (e.x = T(e, "x", Number)), (e.y = T(e, "y", Number)), e;
+              return ((e.x = T(e, "x", Number)), (e.y = T(e, "y", Number)), e);
             })(e),
             A = m,
             R = [],
             N = t.width * B.x,
             z = t.height * B.y;
           A--;
-
         )
           R.push(
             ((l = {
@@ -448,7 +446,7 @@
               ovalScalar: 0.6,
               scalar: l.scalar,
               flat: l.flat,
-            })
+            }),
           );
         return i
           ? i.addFettis(R)
@@ -459,14 +457,14 @@
                 f = t.getContext("2d"),
                 u = c(function (e) {
                   function c() {
-                    (l = s = null),
+                    ((l = s = null),
                       f.clearRect(0, 0, o.width, o.height),
                       w.clear(),
                       i(),
-                      e();
+                      e());
                   }
-                  (l = x.frame(function e() {
-                    !n ||
+                  ((l = x.frame(function e() {
+                    (!n ||
                       (o.width === r.width && o.height === r.height) ||
                       ((o.width = t.width = r.width),
                       (o.height = t.height = r.height)),
@@ -478,18 +476,18 @@
                         return F(f, t);
                       })).length
                         ? (l = x.frame(e))
-                        : c();
+                        : c());
                   })),
-                    (s = c);
+                    (s = c));
                 });
               return {
                 addFettis: function (t) {
-                  return (h = h.concat(t)), u;
+                  return ((h = h.concat(t)), u);
                 },
                 canvas: t,
                 promise: u,
                 reset: function () {
-                  l && x.cancel(l), s && s();
+                  (l && x.cancel(l), s && s());
                 },
               };
             })(t, R, d, a, o)),
@@ -502,7 +500,7 @@
           return c(function (t) {
             t();
           });
-        l && i
+        (l && i
           ? (t = i.canvas)
           : l &&
             !t &&
@@ -518,7 +516,7 @@
               );
             })(r)),
             document.body.appendChild(t)),
-          s && !m && d(t);
+          s && !m && d(t));
         var o = { width: t.width, height: t.height };
         function b() {
           if (u) {
@@ -537,13 +535,13 @@
           o.width = o.height = null;
         }
         function M() {
-          (i = null),
+          ((i = null),
             s && ((h = !1), e.removeEventListener("resize", b)),
             l &&
               t &&
               (document.body.contains(t) && document.body.removeChild(t),
               (t = null),
-              (m = !1));
+              (m = !1)));
         }
         return (
           u && !m && u.init(t),
@@ -555,15 +553,15 @@
       }
       return (
         (b.reset = function () {
-          u && u.reset(), i && i.reset();
+          (u && u.reset(), i && i.reset());
         }),
         b
       );
     }
     function R() {
-      return y || (y = A(null, { useWorker: !0, resize: !0 })), y;
+      return (y || (y = A(null, { useWorker: !0, resize: !0 })), y);
     }
-    (a.exports = function () {
+    ((a.exports = function () {
       return R().apply(this, arguments);
     }),
       (a.exports.reset = function () {
@@ -589,7 +587,7 @@
                 (h = Math.min(h, m)),
                 (f = Math.max(f, d)),
                 (u = Math.max(u, m)));
-          (o = f - c), (l = u - h);
+          ((o = f - c), (l = u - h));
           var g = Math.min(10 / o, 10 / l);
           a = [
             g,
@@ -624,26 +622,26 @@
           f = Math.ceil(c.actualBoundingBoxAscent + c.actualBoundingBoxDescent),
           u = c.actualBoundingBoxLeft + 2,
           d = c.actualBoundingBoxAscent + 2;
-        (h += 4),
+        ((h += 4),
           (f += 4),
           ((s = (l = new OffscreenCanvas(h, f)).getContext("2d")).font = i),
           (s.fillStyle = n),
-          s.fillText(e, u, d);
+          s.fillText(e, u, d));
         var m = 1 / a;
         return {
           type: "bitmap",
           bitmap: l.transferToImageBitmap(),
           matrix: [m, 0, 0, m, (-h * m) / 2, (-f * m) / 2],
         };
-      });
+      }));
   })(
     (function () {
       return void 0 !== t ? t : "undefined" != typeof self ? self : this || {};
     })(),
     e,
-    !1
+    !1,
   ),
-    (t.confetti = e.exports);
+    (t.confetti = e.exports));
 })(window, {});
 
 !(function (t) {
@@ -651,18 +649,18 @@
   function e(o) {
     if (n[o]) return n[o].exports;
     var a = (n[o] = { i: o, l: !1, exports: {} });
-    return t[o].call(a.exports, a, a.exports, e), (a.l = !0), a.exports;
+    return (t[o].call(a.exports, a, a.exports, e), (a.l = !0), a.exports);
   }
-  (e.m = t),
+  ((e.m = t),
     (e.c = n),
     (e.d = function (t, n, o) {
       e.o(t, n) || Object.defineProperty(t, n, { enumerable: !0, get: o });
     }),
     (e.r = function (t) {
-      "undefined" != typeof Symbol &&
+      ("undefined" != typeof Symbol &&
         Symbol.toStringTag &&
         Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }),
-        Object.defineProperty(t, "__esModule", { value: !0 });
+        Object.defineProperty(t, "__esModule", { value: !0 }));
     }),
     (e.t = function (t, n) {
       if ((1 & n && (t = e(t)), 8 & n)) return t;
@@ -679,7 +677,7 @@
             a,
             function (n) {
               return t[n];
-            }.bind(null, a)
+            }.bind(null, a),
           );
       return o;
     }),
@@ -692,13 +690,13 @@
           : function () {
               return t;
             };
-      return e.d(n, "a", n), n;
+      return (e.d(n, "a", n), n);
     }),
     (e.o = function (t, n) {
       return Object.prototype.hasOwnProperty.call(t, n);
     }),
     (e.p = ""),
-    e((e.s = 1));
+    e((e.s = 1)));
 })([
   ,
   function (t, n, e) {
@@ -790,963 +788,11 @@
             : void 0,
           a.attributes["data-coffee-color"]
             ? a.attributes["data-coffee-color"].value
-            : void 0
-        )
+            : void 0,
+        ),
       );
   },
 ]);
-
-function render() {
-  if (document.querySelector(".myContainer")) {
-    document.querySelector(".myContainer").style.visibility = "visible";
-    return;
-  }
-
-  const container = document.createElement("div");
-  container.classList.add("myContainer");
-  container.style.setProperty("background-color", "transparent", "important");
-  container.style.position = "fixed";
-  container.style.margin = "0";
-  container.style.padding = "0";
-  container.style.top = "0";
-  container.style.width = "100%";
-  container.style.display = "flex";
-  container.style.justifyContent = "center";
-  container.style.alignItems = "center";
-  container.style.flexDirection = "column";
-  container.style.zIndex = "99999";
-
-  const shadowRoot = container.attachShadow({ mode: "open" });
-
-  shadowRoot.innerHTML = `
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      .container {
-        background-color: #ffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        z-index: 999;
-        padding: 2px 0;
-        position: relative;
-      }
-
-      .dark-mode.container {
-        background-color: black;
-      }
-
-      input {
-        background: inherit;
-        border: none;
-        color: black;
-        font-size: 16px;
-        outline: none;
-        text-align: center;
-      }
-
-      .progress-bar {
-        position: absolute;
-        width: 100%;
-        z-index: -2;
-        height: 20px;
-        background-color: inherit;
-        overflow: hidden;
-      }
-
-      .progress {
-        height: 100%;
-        width: 0;
-        background-color: #4caf50;
-        transition: width 2s ease-out;
-      }
-
-      .dark-mode .progress {
-        background-color: #00b22d;
-      }
-
-      .progress-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #1c1c1c;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-      }
-
-      .dark-mode .progress-text {
-        color: white;
-      }
-
-      .progress-text > input {
-        width: 430px;
-      }
-
-      .timer {
-        color: #1c1c1c;
-        display: flex;
-        margin-left: auto;
-        align-items: center;
-        justify-content: center;
-        margin-right: 10px;
-      }
-
-      .dark-mode  input,
-      .dark-mode .timer,
-      .dark-mode .play-btn,
-      .dark-mode .reset-btn,
-      .dark-mode .options-btn {
-        color: white;
-      }
-
-      .timer > input {
-        font-size: 16px;
-        font-weight: lighter;
-        width: 20px;
-      }
-
-      #timer-min {
-        width: 30px;
-      }
-
-      .play-btn,
-      .reset-btn {
-        margin: 0;
-        background: none;
-        border: none;
-        color: inherit;
-        font-size: 16px;
-        cursor: pointer;
-      }
-
-      .play-btn {
-        margin: 0 10px ;
-      }
-
-      .reset-btn {
-        margin: 0;
-      }
-
-      .collapsed {
-        height: 4px;
-        padding: 0;
-        transition: all 1ms ease;
-      }
-
-      .collapsed .progress-bar {
-        height: 4px;
-      }
-
-      .collapsed .progress {
-        height: 100%;
-      }
-
-      .collapsed .progress-text,
-      .collapsed .timer,
-      .collapsed .options-btn
-      {
-        display: none;
-      }
-
-      .notch {
-        width: 50px;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 8px solid white;
-        cursor: pointer;
-        position: relative;
-      }
-
-      .notch > svg {
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translatex(-50%);
-      }
-
-      .dark-mode.notch {
-        border-top: 8px solid black;
-      }
-
-      .input-error {
-        border: 2px solid red;
-      }
-
-      .options-btn {
-        background: none;
-        border: none;
-        color: #1c1c1c;
-        font-weight: bolder;
-        font-size: 18px;
-        cursor: pointer;
-        margin-right: 10px;
-      }
-
-      .dark-mode .options-btn {
-        color: white;
-      }
-
-      .dropdown-menu {
-        position: absolute;
-        right: 10px;
-        top: 30px;
-        background-color: white;
-        border: 1px solid #ccc;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 220px;
-        z-index: 1000;
-        padding: 15px;
-        border-radius: 5px;
-      }
-
-      .dropdown-item {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        display: flex;
-        color: black;
-        font-size: 14px;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-
-      #animation-toggle-label,
-      #darkmode-toggle-label {
-        margin-top: 3px;
-        width: 40px;
-        height: 20px;
-        position: relative;
-        display: block;
-        background: #ebebeb;
-        border-radius: 200px;
-        box-shadow:
-          inset 0 5px 15px rgba(0, 0, 0, 0.4),
-          inset 0 -5px 15px rgba(255, 255, 255, 0.4);
-        cursor: pointer;
-      }
-
-      #animation-toggle-label:after,
-      #darkmode-toggle-label:after {
-        content: "";
-        width: 18px;
-        height: 18px;
-        position: absolute;
-        top: 1px;
-        left: 1px;
-        background: linear-gradient(180deg, #ffcc89, #d8860b);
-        border-radius: 100%;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      #animation-toggle-label:after{
-        background: linear-gradient(180deg, white, black);
-      }
-
-      #animation-toggle,
-      #darkmode-toggle {
-        width: 0;
-        height: 0;
-        visibility: hidden;
-      }
-
-      #darkmode-toggle:checked + #darkmode-toggle-label {
-        background: #242424;
-      }
-
-      #animation-toggle:checked + #animation-toggle-label:after,
-      #darkmode-toggle:checked + #darkmode-toggle-label:after {
-        left: 39px;
-        transform: translateX(-100%);
-        background: linear-gradient(180deg, #777, #3a3a3a);
-      }
-
-      #animation-toggle:checked + #animation-toggle-label:after {
-         background: linear-gradient(180deg, white, black);
-      }
-
-      #animation-toggle-label,
-      #animation-toggle-label:after,
-      #darkmode-toggle-label,
-      #darkmode-toggle-label:after {
-        transition: 0.3s;
-      }
-
-      #animation-toggle-label:active:after,
-      #darkmode-toggle-label:active:after {
-        transform: scaleX(1.2);
-      }
-
-      .shim {
-        position: relative;
-        overflow: hidden;
-        background-color: rgba(0, 255, 0, 0.5);
-      }
-
-      .shim::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        transform: translateX(-100%);
-        background-image: linear-gradient(
-          90deg,
-          rgba(233, 233, 233, 1) 0,
-          rgba(233, 233, 233, 0.9) 50%,
-          rgba(233, 233, 233, 0.8) 100%
-        );
-        animation: shimmer 2s ease-out infinite;
-        content: "";
-      }
-
-      @keyframes shimmer {
-        100% {
-          transform: translateX(0%);
-          opacity: 0;
-        }
-      }
-
-      .links {
-        justify-content: space-around;
-      }
-
-      a {
-        color: rgba(0, 0, 0, 0.4);
-        font-size: 12px;
-      }
-
-      .row {
-        flex-direction: row;
-      }
-
-      .btn {
-        padding: 5px 0 15px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #ccc;
-      }
-
-      .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-      }
-      
-      #snooze-btn {
-        background-color: #ffffff;
-        border: 1px solid gray;
-        border-radius: 20px;
-        padding: 10px;
-        font-weight: bold;
-        color: black;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .heading {
-        margin: 5px 0 15px 0;
-        justify-content: center;
-        gap: 5px;
-      }
-
-      .heading > a {
-        text-decoration: none;
-        font-size: 15px;
-      }
-
-      .dropdown-item:last-child {
-        margin-bottom: 0;
-      }
-
-      .color-options {
-        display: flex;
-        width: 100%;
-        height: 40px;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      }
-
-      .color-option {
-        width: 23px;
-        height: 23px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      button#theme-toggle {
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
-
-      .dark-mode svg {
-        stroke: white !important;
-        fill: white !important;
-      }
-
-      .dark-mode svg g g g {
-        fill: white !important;
-      }
-
-      .dark-mode svg g path, .dark-mode svg g rect {
-        fill: white !important;
-      }
-     
-      .dark-mode .dropdown-menu {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        border-color: #ccc !important;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-      }
-
-      .dark-mode .dropdown-menu svg,
-      .dark-mode .dropdown-menu svg g,
-      .dark-mode .dropdown-menu svg path,
-      .dark-mode .dropdown-menu svg rect {
-        fill: initial !important;
-        stroke: initial !important;
-      }
-
-      .dark-mode .dropdown-menu img {
-        filter: none !important;
-      }
-    </style>
-
-    <div class="container">
-      <div class="progress-bar">
-        <div class="progress"></div>
-      </div>
-
-      <div class="progress-text">
-        <input
-          type="text"
-          id="focus-input"
-          placeholder="What's the one thing you want to focus on right now?"
-        />
-      </div>
-
-      <div class="timer">
-        <input id="timer-min" inputmode="numeric" maxlength="3" value="000" />
-        :
-        <input id="timer-sec" inputmode="numeric" maxlength="2" value="00" />
-
-        <button class="play-btn">
-           <svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
-         </button>
-        <button class="reset-btn">
-         <svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="14" height="14" fill="#000000"></rect> </g></svg>
-        </button>
-      </div>
-      <button class="options-btn">⋮</button>
-
-      <div class="dropdown-menu hidden">
-        <div class="close-btn">
-          <svg width="17" height="17" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#0F1729"></path> 
-            </g>
-          </svg>
-        </div>
-        <div class="dropdown-item row heading">
-          <img src="chrome-extension://${chrome.runtime.id}/assests/menu_logo.svg" alt="Logo" height="20"/>
-        </div>
-        <div class="dropdown-item row">
-          <span>Light Mode</span>
-          <input type="checkbox" id="darkmode-toggle" />
-          <label for="darkmode-toggle" id="darkmode-toggle-label"></label>
-        </div>
-        <div class="dropdown-item row">
-          <span>Progress Animation</span>
-          <input type="checkbox" id="animation-toggle" />
-          <label for="animation-toggle" id="animation-toggle-label"></label>
-        </div>
-        <div class="dropdown-item">
-          <span>Progress Bar Color</span>
-            <div class="color-options">
-              <span class="color-option" style="background-color: #4caf50"></span>
-              <span class="color-option" style="background-color: #2196f3"></span>
-              <span class="color-option" style="background-color: #ff9800"></span>
-              <span class="color-option" style="background-color: #e91e63"></span>
-              <span class="color-option" style="background-color: #9e9e9e"></span>
-            </div>
-        </div>
-        <div class="dropdown-item row btn">
-          <button id="snooze-btn">
-            Snooze for 1 hour
-          </button>
-        </div>
-        <div class="dropdown-item row links">
-          <a href="https://links.cebe.fyi/ultra-focus" target="_blank">About</a>
-          <a href="https://tally.so/r/n0REgA" target="_blank">Feedback</a>
-        </div>
-        <div class="dropdown-item row links">
-          <a href="https://www.buymeacoffee.com/cebe" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 55px !important;width: 190px !important;" ></a>
-        </div>
-      </div>
-    </div>
-    <span class="notch">
-   <svg fill="#000000" height="7px" width="7px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.74 511.74" xml:space="preserve" stroke="#000000" stroke-width="38.89186"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M508.788,371.087L263.455,125.753c-4.16-4.16-10.88-4.16-15.04,0L2.975,371.087c-4.053,4.267-3.947,10.987,0.213,15.04 c4.16,3.947,10.667,3.947,14.827,0l237.867-237.76l237.76,237.76c4.267,4.053,10.987,3.947,15.04-0.213 C512.734,381.753,512.734,375.247,508.788,371.087z"></path> </g> </g> </g></svg>
-    </span>
-  `;
-
-  document.body.appendChild(container);
-
-  let countdownInterval = null;
-  let snoozeTimeout = null;
-  let isRunning = false;
-  let totalInitialTime = 0;
-  let remainingTime = 0;
-
-  const validateTimerInput = (e) => {
-    const input = e.target;
-    const isMin = input.id === "timer-min";
-    const isSec = input.id === "timer-sec";
-
-    input.value = input.value.replace(/\D/g, "");
-
-    if (isMin) {
-      input.value = input.value.slice(0, 3);
-
-      if (input.value && parseInt(input.value, 10) > 999) {
-        input.value = "999";
-      }
-    }
-
-    if (isSec) {
-      input.value = input.value.slice(0, 2);
-
-      if (input.value && parseInt(input.value, 10) > 59) {
-        input.value = "59";
-      }
-    }
-
-    const isNumber = /^\d+$/;
-
-    if (!isNumber.test(input.value.trim()) && input.value.trim() !== "") {
-      input.classList.add("input-error");
-      input.setAttribute("aria-invalid", "true");
-    } else {
-      input.classList.remove("input-error");
-      input.removeAttribute("aria-invalid");
-    }
-  };
-
-  const startTimer = () => {
-    const minInput = shadowRoot.getElementById("timer-min");
-    const secInput = shadowRoot.getElementById("timer-sec");
-    const playBtn = shadowRoot.querySelector(".play-btn");
-
-    const minutes = parseInt(minInput.value) || 0;
-    const seconds = parseInt(secInput.value) || 0;
-
-    totalInitialTime = totalInitialTime
-      ? totalInitialTime
-      : minutes * 60 + seconds;
-    remainingTime = remainingTime ? remainingTime : totalInitialTime;
-
-    if (remainingTime <= 0) return;
-
-    isRunning = true;
-    playBtn.innerHTML = `
-      <svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 1H2V15H7V1Z" fill="#000000"></path> <path d="M14 1H9V15H14V1Z" fill="#000000"></path> </g></svg>
-      `;
-
-    countdownInterval = setInterval(() => {
-      if (remainingTime <= 0) {
-        updateProgress(0);
-        clearInterval(countdownInterval);
-        isRunning = false;
-        totalInitialTime = 0;
-        playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
-        `;
-        saveState();
-        return;
-      }
-
-      remainingTime--;
-
-      console.log(remainingTime, totalInitialTime);
-
-      const currentMinutes = Math.floor(remainingTime / 60);
-      const currentSeconds = remainingTime % 60;
-
-      minInput.value = String(currentMinutes).padStart(3, "0");
-      secInput.value = String(currentSeconds).padStart(2, "0");
-
-      const progressPercentage =
-        ((totalInitialTime - remainingTime) / totalInitialTime) * 100;
-
-      updateProgress(progressPercentage);
-      saveState();
-    }, 1000);
-    saveState();
-  };
-
-  const updateProgress = (percentage) => {
-    const progressBar = shadowRoot.querySelector(".progress");
-    progressBar.style.width = `${percentage}%`;
-  };
-
-  const stopTimer = () => {
-    clearInterval(countdownInterval);
-    isRunning = false;
-
-    saveState();
-  };
-
-  const resetTimer = () => {
-    stopTimer();
-    resetInputs();
-    totalInitialTime = 0;
-    remainingTime = 0;
-    const playBtn = shadowRoot.querySelector(".play-btn");
-    playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
-    `;
-    saveState();
-  };
-
-  const resetInputs = () => {
-    shadowRoot.getElementById("timer-min").value = "000";
-    shadowRoot.getElementById("timer-sec").value = "00";
-    shadowRoot.getElementById("focus-input").value = "";
-    updateProgress(0);
-  };
-
-  const toggleTimer = () => {
-    const playBtn = shadowRoot.querySelector(".play-btn");
-
-    if (!isRunning) {
-      startTimer();
-    } else {
-      stopTimer();
-      playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
-      `;
-    }
-    saveState();
-  };
-
-  shadowRoot
-    .getElementById("timer-min")
-    .addEventListener("input", validateTimerInput);
-  shadowRoot
-    .getElementById("timer-sec")
-    .addEventListener("input", validateTimerInput);
-  shadowRoot.querySelector(".play-btn").addEventListener("click", toggleTimer);
-  shadowRoot.querySelector(".reset-btn").addEventListener("click", resetTimer);
-
-  const progressContainer = shadowRoot.querySelector(".container");
-  const notch = shadowRoot.querySelector(".notch");
-  const snoozeBtn = shadowRoot.querySelector("#snooze-btn");
-  const optionsBtn = shadowRoot.querySelector(".options-btn");
-  const dropdownMenu = shadowRoot.querySelector(".dropdown-menu");
-  const animationToggle = shadowRoot.getElementById("animation-toggle");
-  const themeToggleBtn = shadowRoot.getElementById("darkmode-toggle");
-  const colorOptions = shadowRoot.querySelectorAll(".color-option");
-  const closeDropdownBtn = shadowRoot.querySelector(".close-btn");
-
-  closeDropdownBtn.addEventListener("click", () => {
-    dropdownMenu.classList.add("hidden");
-  });
-
-  notch.addEventListener("click", () => {
-    const container = shadowRoot.querySelector(".container");
-    const svg = notch.querySelector("svg");
-
-    if (container.classList.contains("collapsed")) {
-      container.classList.remove("collapsed");
-      svg.style.transform = "";
-    } else {
-      container.classList.add("collapsed");
-      svg.style.transform = `rotate(180deg) translateX(50%)`;
-      dropdownMenu.classList.add("hidden");
-    }
-
-    saveState();
-  });
-
-  snoozeBtn.addEventListener("click", () => {
-    snooze();
-  });
-
-  optionsBtn.addEventListener("click", () => {
-    dropdownMenu.classList.toggle("hidden");
-    saveState();
-  });
-
-  colorOptions.forEach((el) => {
-    const progress = shadowRoot.querySelector(".progress");
-    el.addEventListener("click", () => {
-      const color = el.style.backgroundColor;
-      progress.style.backgroundColor = color;
-      saveState();
-    });
-  });
-
-  animationToggle.addEventListener("change", () => {
-    const progress = shadowRoot.querySelector(".progress");
-
-    if (animationToggle.checked) {
-      progress.classList.add("shim");
-    } else {
-      progress.classList.remove("shim");
-    }
-    saveState();
-  });
-
-  themeToggleBtn.addEventListener("change", () => {
-    if (themeToggleBtn.checked) {
-      progressContainer.classList.add("dark-mode");
-    } else {
-      progressContainer.classList.remove("dark-mode");
-    }
-    notch.classList.toggle("dark-mode");
-    saveState();
-  });
-
-  const saveState = () => {
-    const progressText = shadowRoot.getElementById("focus-input").value;
-    const timerMin = shadowRoot.getElementById("timer-min").value;
-    const timerSec = shadowRoot.getElementById("timer-sec").value;
-    const isCollapsed = shadowRoot
-      .querySelector(".container")
-      .classList.contains("collapsed");
-    const isDarkMode = shadowRoot
-      .querySelector(".container")
-      .classList.contains("dark-mode");
-    const progressWidth = shadowRoot.querySelector(".progress").style.width;
-    const resetBtn = shadowRoot.querySelector(".reset-btn").style.display;
-    const progressColor =
-      shadowRoot.querySelector(".progress").style.backgroundColor;
-    const progressAnimation = shadowRoot
-      .querySelector(".progress")
-      .classList.contains("shim");
-    const snoozed = container.style.visibility === "hidden";
-
-    const state = {
-      progressColor,
-      progressAnimation,
-      isDarkMode,
-      progressText,
-      timerMin,
-      timerSec,
-      isRunning,
-      totalInitialTime,
-      remainingTime,
-      isCollapsed,
-      progressWidth,
-      resetBtn,
-      snoozed,
-    };
-
-    chrome.storage.sync.set({ state });
-  };
-
-  const loadState = () => {
-    chrome.storage.sync.get("state", ({ state }) => {
-      if (state) {
-        const {
-          isDarkMode,
-          progressText,
-          progressColor,
-          progressAnimation,
-          timerMin,
-          timerSec,
-          isRunning: running,
-          totalInitialTime: initialTime,
-          remainingTime: remaining,
-          isCollapsed,
-          progressWidth,
-          resetBtn,
-          snoozed,
-        } = state;
-
-        if (snoozed) {
-          container.style.visibility = "hidden";
-        }
-
-        shadowRoot.getElementById("focus-input").value = progressText;
-        shadowRoot.getElementById("timer-min").value = timerMin;
-        shadowRoot.getElementById("timer-sec").value = timerSec;
-
-        if (progressAnimation) {
-          const animationToggle = shadowRoot.querySelector("#animation-toggle");
-          if (animationToggle) animationToggle.checked = true;
-          shadowRoot.querySelector(".progress").classList.add("shim");
-        }
-
-        if (progressColor) {
-          shadowRoot.querySelector(".progress").style.backgroundColor =
-            progressColor;
-        }
-
-        if (isCollapsed) {
-          shadowRoot.querySelector(".container").classList.add("collapsed");
-          const svg = shadowRoot.querySelector(".notch svg");
-          svg.style.transform = `rotate(180deg) translateX(50%)`;
-        }
-
-        if (isDarkMode) {
-          const darkModeToggle = shadowRoot.querySelector("#darkmode-toggle");
-          if (darkModeToggle) {
-            darkModeToggle.checked = true;
-            shadowRoot.querySelector(".container").classList.add("dark-mode");
-            shadowRoot.querySelector(".notch").classList.add("dark-mode");
-          }
-        }
-
-        shadowRoot.querySelector(".progress").style.width = progressWidth;
-        shadowRoot.querySelector(".reset-btn").style.display = resetBtn;
-
-        isRunning = running;
-        totalInitialTime = initialTime;
-        remainingTime = remaining;
-      }
-    });
-  };
-
-  chrome.storage.onChanged.addListener((changes, namespace) => {
-    if (namespace === "sync") {
-      const {
-        isDarkMode,
-        progressText,
-        progressColor,
-        progressAnimation,
-        timerMin,
-        timerSec,
-        isRunning: running,
-        totalInitialTime: initialTime,
-        remainingTime: remaining,
-        isCollapsed,
-        progressWidth,
-        resetBtn,
-        snoozed,
-      } = changes.state.newValue;
-
-      if (snoozed) {
-        container.style.visibility = "hidden";
-      } else {
-        container.style.visibility = "visible";
-      }
-
-      shadowRoot.getElementById("focus-input").value = progressText;
-      shadowRoot.getElementById("timer-min").value = timerMin;
-      shadowRoot.getElementById("timer-sec").value = timerSec;
-
-      if (progressAnimation) {
-        const animationToggle = shadowRoot.querySelector("#animation-toggle");
-        if (animationToggle) animationToggle.checked = true;
-        shadowRoot.querySelector(".progress").classList.add("shim");
-      } else {
-        const animationToggle = shadowRoot.querySelector("#animation-toggle");
-        if (animationToggle) animationToggle.checked = false;
-        shadowRoot.querySelector(".progress").classList.remove("shim");
-      }
-
-      if (progressColor) {
-        shadowRoot.querySelector(".progress").style.backgroundColor =
-          progressColor;
-      }
-
-      if (isCollapsed) {
-        shadowRoot.querySelector(".container").classList.add("collapsed");
-        const svg = shadowRoot.querySelector(".notch svg");
-        const menu = shadowRoot.querySelector(".dropdown-menu");
-        svg.style.transform = `rotate(180deg) translateX(50%)`;
-        menu.classList.add("hidden");
-      } else {
-        shadowRoot.querySelector(".container").classList.remove("collapsed");
-        const svg = shadowRoot.querySelector(".notch svg");
-        svg.style.transform = "";
-      }
-
-      if (isDarkMode) {
-        const darkModeToggle = shadowRoot.querySelector("#darkmode-toggle");
-        if (darkModeToggle) {
-          darkModeToggle.checked = true;
-          shadowRoot.querySelector(".container").classList.add("dark-mode");
-          shadowRoot.querySelector(".notch").classList.add("dark-mode");
-        }
-      } else {
-        const darkModeToggle = shadowRoot.querySelector("#darkmode-toggle");
-        if (darkModeToggle) {
-          darkModeToggle.checked = false;
-          shadowRoot.querySelector(".container").classList.remove("dark-mode");
-          shadowRoot.querySelector(".notch").classList.remove("dark-mode");
-        }
-      }
-      shadowRoot.querySelector(".progress").style.width = progressWidth;
-      shadowRoot.querySelector(".reset-btn").style.display = resetBtn;
-
-      isRunning = running;
-      totalInitialTime = initialTime;
-      remainingTime = remaining;
-
-      const playBtn = shadowRoot.querySelector(".play-btn");
-      if (isRunning) {
-        playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 1H2V15H7V1Z" fill="#000000"></path> <path d="M14 1H9V15H14V1Z" fill="#000000"></path> </g></svg>
-        `;
-      } else {
-        clearInterval(countdownInterval);
-        playBtn.innerHTML = `<svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-          <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-          <g id="SVGRepo_iconCarrier">
-            <title>play [#1001]</title>
-            <desc>
-              Created with Sketch.
-            </desc>
-            <defs/>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000">
-                <g id="icons" transform="translate(56.000000, 160.000000)">
-                  <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"/>
-                </g>
-              </g>
-            </g>
-          </g>
-        </svg>
-        `;
-      }
-
-      if (remaining === 0 && changes.state.oldValue.remainingTime === 0) {
-        if (!running && changes.state.oldValue.isRunning) {
-          triggerConfetti();
-        }
-      }
-    }
-  });
-
-  loadState();
-
-  function snooze() {
-    const snoozeTime = 60 * 60 * 1000;
-
-    container.style.visibility = "hidden";
-
-    snoozeTimeout = setTimeout(() => {
-      container.style.visibility = "visible";
-      saveState();
-    }, snoozeTime);
-    saveState();
-  }
-}
-
-render();
 
 function triggerConfetti() {
   confetti({
@@ -1771,8 +817,528 @@ function triggerConfetti() {
   });
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "render") {
-    render();
+const style = `<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: #ffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  z-index: 999;
+  padding: 2px 0;
+  position: relative;
+}
+
+.dark-mode.container {
+  background-color: black;
+}
+
+input {
+  background: inherit;
+  border: none;
+  color: black;
+  font-size: 16px;
+  outline: none;
+  text-align: center;
+}
+
+.progress-bar {
+  position: absolute;
+  width: 100%;
+  z-index: -2;
+  height: 20px;
+  background-color: inherit;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0;
+  background-color: #4caf50;
+  transition: width 2s ease-out;
+}
+
+.dark-mode .progress {
+  background-color: #00b22d;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #1c1c1c;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.dark-mode .progress-text {
+  color: white;
+}
+
+.progress-text > input {
+  width: 430px;
+}
+
+.timer {
+  color: #1c1c1c;
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.dark-mode  input,
+.dark-mode .timer,
+.dark-mode .play-btn,
+.dark-mode .reset-btn,
+.dark-mode .options-btn {
+  color: white;
+}
+
+.timer > input {
+  font-size: 16px;
+  font-weight: lighter;
+  width: 20px;
+}
+
+#timer-min {
+  width: 30px;
+}
+
+.play-btn,
+.reset-btn {
+  margin: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.play-btn {
+  margin: 0 10px ;
+}
+
+.reset-btn {
+  margin: 0;
+}
+
+.collapsed {
+  height: 4px;
+  padding: 0;
+  transition: all 1ms ease;
+}
+
+.collapsed .progress-bar {
+  height: 4px;
+}
+
+.collapsed .progress {
+  height: 100%;
+}
+
+.collapsed .progress-text,
+.collapsed .timer,
+.collapsed .options-btn
+{
+  display: none;
+}
+
+.notch {
+  width: 50px;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 8px solid white;
+  cursor: pointer;
+  position: relative;
+}
+
+.notch > svg {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translatex(-50%);
+}
+
+.dark-mode.notch {
+  border-top: 8px solid black;
+}
+
+.input-error {
+  border: 2px solid red;
+}
+
+.options-btn {
+  background: none;
+  border: none;
+  color: #1c1c1c;
+  font-weight: bolder;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.dark-mode .options-btn {
+  color: white;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 10px;
+  top: 30px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  z-index: 1000;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.dropdown-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  color: black;
+  font-size: 14px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#animation-toggle-label,
+#darkmode-toggle-label {
+  margin-top: 3px;
+  width: 40px;
+  height: 20px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 200px;
+  box-shadow:
+    inset 0 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0 -5px 15px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+#animation-toggle-label:after,
+#darkmode-toggle-label:after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+#animation-toggle-label:after{
+  background: linear-gradient(180deg, white, black);
+}
+
+#animation-toggle,
+#darkmode-toggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+#darkmode-toggle:checked + #darkmode-toggle-label {
+  background: #242424;
+}
+
+#animation-toggle:checked + #animation-toggle-label:after,
+#darkmode-toggle:checked + #darkmode-toggle-label:after {
+  left: 39px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+
+#animation-toggle:checked + #animation-toggle-label:after {
+   background: linear-gradient(180deg, white, black);
+}
+
+#animation-toggle-label,
+#animation-toggle-label:after,
+#darkmode-toggle-label,
+#darkmode-toggle-label:after {
+  transition: 0.3s;
+}
+
+#animation-toggle-label:active:after,
+#darkmode-toggle-label:active:after {
+  transform: scaleX(1.2);
+}
+
+.shim {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 255, 0, 0.5);
+}
+
+.shim::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(233, 233, 233, 1) 0,
+    rgba(233, 233, 233, 0.9) 50%,
+    rgba(233, 233, 233, 0.8) 100%
+  );
+  animation: shimmer 2s ease-out infinite;
+  content: "";
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(0%);
+    opacity: 0;
   }
-});
+}
+
+.links {
+  justify-content: space-around;
+}
+
+a {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.btn {
+  padding: 5px 0 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+#snooze-btn {
+  background-color: #ffffff;
+  border: 1px solid gray;
+  border-radius: 20px;
+  padding: 10px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  margin: 5px 0 15px 0;
+  justify-content: center;
+  gap: 5px;
+}
+
+.heading > a {
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.dropdown-item:last-child {
+  margin-bottom: 0;
+}
+
+.color-options {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.color-option {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+button#theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dark-mode svg {
+  stroke: white !important;
+  fill: white !important;
+}
+
+.dark-mode svg g g g {
+  fill: white !important;
+}
+
+.dark-mode svg g path, .dark-mode svg g rect {
+  fill: white !important;
+}
+
+.dark-mode .dropdown-menu {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ccc !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark-mode .dropdown-menu svg,
+.dark-mode .dropdown-menu svg g,
+.dark-mode .dropdown-menu svg path,
+.dark-mode .dropdown-menu svg rect {
+  fill: initial !important;
+  stroke: initial !important;
+}
+
+.dark-mode .dropdown-menu img {
+  filter: none !important;
+}
+</style>`;
+
+const UI = `
+<div class="container">
+<div class="progress-bar">
+  <div class="progress"></div>
+</div>
+
+<div class="progress-text">
+  <input
+    type="text"
+    id="focus-input"
+    placeholder="What's the one thing you want to focus on right now?"
+  />
+</div>
+
+<div class="timer">
+  <input id="timer-min" inputmode="numeric" maxlength="3" value="000" />
+  :
+  <input id="timer-sec" inputmode="numeric" maxlength="2" value="00" />
+
+  <button class="play-btn">
+     <svg width="13px" height="13px" viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+   </button>
+  <button class="reset-btn">
+   <svg width="13px" height="13px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="14" height="14" fill="#000000"></rect> </g></svg>
+  </button>
+</div>
+<button class="options-btn">⋮</button>
+
+<div class="dropdown-menu hidden">
+  <div class="close-btn">
+    <svg width="17" height="17" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#0F1729"></path> 
+      </g>
+    </svg>
+  </div>
+  <div class="dropdown-item row heading">
+    <img src="chrome-extension://${chrome.runtime.id}/assests/menu_logo.svg" alt="Logo" height="20"/>
+  </div>
+  <div class="dropdown-item row">
+    <span>Light Mode</span>
+    <input type="checkbox" id="darkmode-toggle" />
+    <label for="darkmode-toggle" id="darkmode-toggle-label"></label>
+  </div>
+  <div class="dropdown-item row">
+    <span>Progress Animation</span>
+    <input type="checkbox" id="animation-toggle" />
+    <label for="animation-toggle" id="animation-toggle-label"></label>
+  </div>
+  <div class="dropdown-item">
+    <span>Progress Bar Color</span>
+      <div class="color-options">
+        <span class="color-option" style="background-color: #4caf50"></span>
+        <span class="color-option" style="background-color: #2196f3"></span>
+        <span class="color-option" style="background-color: #ff9800"></span>
+        <span class="color-option" style="background-color: #e91e63"></span>
+        <span class="color-option" style="background-color: #9e9e9e"></span>
+      </div>
+  </div>
+  <div class="dropdown-item row btn">
+    <button id="snooze-btn">
+      Snooze for 1 hour
+    </button>
+  </div>
+  <div class="dropdown-item row links">
+    <a href="https://links.cebe.fyi/ultra-focus" target="_blank">About</a>
+    <a href="https://tally.so/r/n0REgA" target="_blank">Feedback</a>
+  </div>
+  <div class="dropdown-item row links">
+    <a href="https://www.buymeacoffee.com/cebe" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 55px !important;width: 190px !important;" ></a>
+  </div>
+</div>
+</div>
+<span class="notch">
+<svg fill="#000000" height="7px" width="7px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.74 511.74" xml:space="preserve" stroke="#000000" stroke-width="38.89186"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M508.788,371.087L263.455,125.753c-4.16-4.16-10.88-4.16-15.04,0L2.975,371.087c-4.053,4.267-3.947,10.987,0.213,15.04 c4.16,3.947,10.667,3.947,14.827,0l237.867-237.76l237.76,237.76c4.267,4.053,10.987,3.947,15.04-0.213 C512.734,381.753,512.734,375.247,508.788,371.087z"></path> </g> </g> </g></svg>
+</span>
+`;
+const BLACK_PLAY_ICON = `<svg viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>`;
+const WHITE_PLAY_ICON = `<svg viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#ffffff]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#ffffff]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>`;
+const BLACK_PAUSE_ICON = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 1H2V15H7V1Z" fill="#000000"></path> <path d="M14 1H9V15H14V1Z" fill="#000000"></path> </g></svg>`;
+const WHITE_PAUSE_ICON = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 1H2V15H7V1Z" fill="#ffffff"></path> <path d="M14 1H9V15H14V1Z" fill="#ffffff"></path> </g></svg>`;
+const BLACK_RESET_ICON = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="14" height="14" fill="#000000"></rect> </g></svg>`;
+const WHITE_RESET_ICON = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="14" height="14" fill="#ffffff"></rect> </g></svg>`;
+const BLACK_NOTCH_ICON = `<svg viewBox="0 -4.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_up [#000000]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-260.000000, -6684.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M223.707692,6534.63378 L223.707692,6534.63378 C224.097436,6534.22888 224.097436,6533.57338 223.707692,6533.16951 L215.444127,6524.60657 C214.66364,6523.79781 213.397472,6523.79781 212.616986,6524.60657 L204.29246,6533.23165 C203.906714,6533.6324 203.901717,6534.27962 204.282467,6534.68555 C204.671211,6535.10081 205.31179,6535.10495 205.70653,6534.69695 L213.323521,6526.80297 C213.714264,6526.39807 214.346848,6526.39807 214.737591,6526.80297 L222.294621,6534.63378 C222.684365,6535.03868 223.317949,6535.03868 223.707692,6534.63378" id="arrow_up-[#000000]"> </path> </g> </g> </g> </g></svg>`;
+const WHITE_NOTCH_ICON = `<svg viewBox="0 -4.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_up [#ffffff]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-260.000000, -6684.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M223.707692,6534.63378 L223.707692,6534.63378 C224.097436,6534.22888 224.097436,6533.57338 223.707692,6533.16951 L215.444127,6524.60657 C214.66364,6523.79781 213.397472,6523.79781 212.616986,6524.60657 L204.29246,6533.23165 C203.906714,6533.6324 203.901717,6534.27962 204.282467,6534.68555 C204.671211,6535.10081 205.31179,6535.10495 205.70653,6534.69695 L213.323521,6526.80297 C213.714264,6526.39807 214.346848,6526.39807 214.737591,6526.80297 L222.294621,6534.63378 C222.684365,6535.03868 223.317949,6535.03868 223.707692,6534.63378" id="arrow_up-[#ffffff]"> </path> </g> </g> </g> </g></svg>`;
+const BLACK_MENU_ICON = `<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-three-dots-vertical"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path> </g></svg>`;
+const WHITE_MENU_ICON = `<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" class="bi bi-three-dots-vertical" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path> </g></svg>`;
+
+function render() {
+  if (document.querySelector(".myContainer")) {
+    document.querySelector(".myContainer").style.visibility = "visible";
+    return;
+  }
+
+  const container = document.createElement("div");
+  container.classList.add("myContainer");
+  container.style.setProperty("background-color", "transparent", "important");
+  container.style.position = "fixed";
+  container.style.margin = "0";
+  container.style.padding = "0";
+  container.style.top = "0";
+  container.style.width = "100%";
+  container.style.display = "flex";
+  container.style.justifyContent = "center";
+  container.style.alignItems = "center";
+  container.style.flexDirection = "column";
+  container.style.zIndex = "99999";
+
+  const shadowRoot = container.attachShadow({ mode: "open" });
+
+  shadowRoot.innerHTML = style + UI;
+
+  document.body.appendChild(container);
+}
+
+render();
+
